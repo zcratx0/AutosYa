@@ -17,14 +17,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yes</title>
 </head>
-<body>
+<body class="flex">
     <?php require_once("pages/navbar.php"); ?>
-    <h1>Autos YA</h1>
+    <main>
+        <h1>Autos YA</h1>
 
 
-    <h2>Top Alquileres</h2>
+        <h2>Top Alquileres</h2>
 
-    <h2>Info</h2>
+        <h2>Info</h2>
+    </main>
+    <?php require_once("pages/footer.php") ?>
 </body>
 <script type="text/javascript" src="js/materialize.js"></script>
 <script>M.AutoInit();</script>
