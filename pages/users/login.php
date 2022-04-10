@@ -1,5 +1,17 @@
+<?php
+?>
+
+
 <div class="col">
-    <form action="post">
+    <form method="post">
+        <?php if (isset($login_failed) && $login_failed == true) :?>
+            <div class="card-panel red lighten-2">
+                <span class="white-text">
+                    Usuario o contraseña incorrectos
+                </span>
+            </div>
+        <?php endif; ?>
+        <input type="hidden" name="login">
         <div class="input-field row s5">
             <i class="material-icons prefix">email</i>
             <label for="email">Email</label>
@@ -11,7 +23,7 @@
             <input type="password" name="password" id="password" required>
         </div>
         <div class="input-field row s5">
-            <button  type="submit" name="login"class="btn waves-effect waves-light">
+            <button type="submit" name="login"class="btn waves-effect waves-light">
                     <span>Login</span>
                     <i class="material-icons right">send</i>
             </button>

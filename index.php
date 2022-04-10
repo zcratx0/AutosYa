@@ -1,13 +1,4 @@
-<?php
 
-    
-
-?>
-
-
-
-<!DOCTYPE html>
-<html lang="en">
 <head>    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -17,19 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yes</title>
 </head>
-<body class="flex">
-    <?php require_once("pages/navbar.php"); ?>
-    <main>
-        <h1>Autos YA</h1>
-
-
-        <h2>Top Alquileres</h2>
-
-        <h2>Info</h2>
-    </main>
-    <?php require_once("pages/footer.php") ?>
+<body>
+    <?php require_once('pages/navbar.php'); ?>
 </body>
-<script type="text/javascript" src="js/materialize.js"></script>
-<script>M.AutoInit();</script>
 
-</html>
+<script type="text/javascript" src="js/materialize.js"></script>
+<script>
+    M.AutoInit();
+	<?php if (isset($login_failed) && $login_failed == true): ?>$
+		$('#login').modal('open');
+        $login_failed = false;
+	<?php endif; ?>
+    
+	<?php if (isset($register_failed) && $register_failed == true): ?>$
+		$('#register').modal('open');
+        $register_failed = false;
+	<?php endif; ?>
+</script>
+
+

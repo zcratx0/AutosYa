@@ -1,6 +1,5 @@
 <?php
     require_once('generic.php');
-
     class user_model extends generic {
         private $id;
         private $mail;
@@ -12,7 +11,7 @@
         private $document;
         private $state;
         private $role;
-        private $user_array = array();
+        public $user_array = array();
 
         public function constructor($id, $m, $p, $n, $l, $pn, $dt, $d, $s, $r) {
             $this->id = $id;
@@ -21,7 +20,7 @@
             $this->name = $n;
             $this->lastname = $l;
             $this->phonenumber = $pn;
-            $this->documenttyoe = $dt;
+            $this->documenttype = $dt;
             $this->document = $d;
             $this->state = $s;
             $this->role = $r;
@@ -79,6 +78,16 @@
             $this->execute($sqlUsers, $sqlUsersArray);
         }
         //  Cargar sus datos de la base de datos.
+        public function load_user_sql_email($email) {
+            $sqlUser = "SELECT * FROM users WHERE EMAIL = :email";    //  Buscar por ID e Email por mayor seguridad.
+            $sqlArray = array(
+                'email' => $email
+            );
+            if ($this->execute($sqlUser, $sqlArray) < 1) {
+                return false;
+            } else return ($this->execute($sqlUser, $sqlArray));
+        }
+
         public function load_user_sql($id, $email) {
             $sqlUser = "SELECT * FROM users WHERE ID = :id AND EMAIL = :email";    //  Buscar por ID e Email por mayor seguridad.
             $sqlArray = array(
@@ -91,7 +100,13 @@
         }
         //  Cargarse en la clase.
         public function load_user_class($id, $email) {
-            $user = $this->load_user_sql($id, $email);
+            $user = '';
+            if ($id == NULL) {
+                $user = $this->load_user_sql_email($email);
+            } else {
+                $user = $this->load_user_sql($id, $email);
+            }
+            
             if ($user == false) {
                 return false;
             } else {
@@ -121,7 +136,7 @@
                 document = :document,
                 role = :role
                 where id = :id";
-            $this->execute($sqlUsers, $newData);
+            $this->execute($sqlUser, $newData);
         }
 
         
