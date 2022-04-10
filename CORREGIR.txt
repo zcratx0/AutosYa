@@ -1,0 +1,14 @@
+DNI en uso
+Editar usuario no correo en uso
+Barrita filtro
++   Tabla reservas
+mail agradecimiento alias mailer
+hacer secion clientes: usuarios que alquilaron
+dar de alta usuario
+activado desactivado 
++   añadir matricula
+fotos
+Comentar Generic.php
+
+VehicleCards tienen que cambiar lo que muestra
+Reserva tiene que cambiar

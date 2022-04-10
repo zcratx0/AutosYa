@@ -1,11 +1,12 @@
 <?php
   @session_start();
 	require_once('config/config.php');
-  	require_once($path_user_model);
+  require_once($path_user_model);
+  require_once($path_vehicle_model);
 	//	Activar la nav dependiendo del metodo get
 	function activeNav($p) {
 		$page_nav = '';
-		if (ISSET($_GET[$p])) {
+		if (ISSET($_GET[$p]) OR ISSET($_POST[$p])) {
 			echo 'active';	
 		}
 	}
@@ -14,6 +15,8 @@
  	$i = new user_model();
   	//  Iniciar el array de datos
   	$user_data = $i->request();
+  $vehicle_new = new vehicle_model();
+
 
 
 	//	Si esta logueado, cargar sus datos
@@ -36,7 +39,7 @@
 		}
 	}
 	
-	//	Registrar
+	//	Registrar Usuario
 	if (isset($_POST['register'])) {
 		
 		$i->constructor(NULL, $_POST['email'], $_POST['password'], $_POST['name'], $_POST['lastname'], $_POST['phonenumber'], $_POST['documenttype'], $_POST['document'], 'Activado', 'Usuario');
@@ -48,6 +51,15 @@
 			$i->create_user_sql();
 		}
 	}
+//  Crea el vehiculo  
+if (isset($_POST['createVehicle'])) {
+	$vehicle_new = new vehicle_model();	
+  $vehicle_new->constructor(NULL, $_POST['vehicletype'], $_POST['model'], $_POST['brand'], $_POST['color'], $_POST['passenger'], $_POST['price'], $_POST['vendedor_id'], $_POST['year'], $_POST['url'], $_POST['plate']);
+  //    Crear el vehiculo
+  $vehicle_new->create_vehicle_sql();
+  header("Location: index.php?vehicles");
+  die();
+}
 
 
 	  
@@ -60,7 +72,7 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <?php  if(isset($_SESSION['loged']) && $_SESSION['loged'] == true) : ?>
             <li><a class="modal-trigger" href="#edit">Editar perfil</a></li>
-            <li><a class=""  href="<?php echo $path_Logout; ?>">Log out</a></li>
+            <li><a class="logoutbtn"  href="<?php echo $path_Logout; ?>">Log out</a></li>
           <?php else : ?>
             <li><a class="modal-trigger"  href="#login">Login</a></li>
             <li><a class="modal-trigger"  href="#register">Register</a></li>
@@ -76,7 +88,7 @@
                 <li class="tab right "><a class="<?php activeNav('users'); ?>" href="#users">Usuarios</a></li>
               <?php endif; ?>
               <?php if ($user_data['role'] == 'Admin' OR $user_data['role'] == 'Encargado' OR $user_data['role'] == 'Vendedor') : ?>
-                <li class="tab right "><a class="<?php activeNav('vehicles'); ?>" href="#vehicles">Vehiculos</a></li>
+                <li class="tab right "><a class="<?php activeNav('vehicles'); activeNav('createVehicle'); activeNav('vehicleid') ?>" href="#vehicles">Vehiculos</a></li>
               <?php endif; ?>
               <?php if ($user_data['role'] == 'Admin' OR $user_data['role'] == 'Encargado' OR $user_data['role'] == 'Vendedor') : ?>
                 <li class="tab right "><a class="<?php activeNav('rent'); ?>" href="#rent">Alquileres</a></li>
@@ -117,6 +129,7 @@
     <?php 
 		$search_Attribute = 'rent' ;
     	require($path_Search);
+      require($path_rent);
     ?>
   </div>
   <?php endif; ?>
@@ -125,6 +138,7 @@
     <?php 
 		$search_Attribute = 'users' ;
     	require($path_Search);
+		  require($path_Users2);
     ?>
   </div>
   <?php endif; ?>
@@ -159,6 +173,69 @@
         </div>
       </div>
     <?php endif; ?>
-    
+    <?php
+	//	Cargar datos de los usuarios para modificarlos.
+		if (isset($_GET['userid']) && isset($_GET['useremail']))	:
+			$user_data_edit = new user_model();
+			$user_data_edit->load_user_class($_GET['userid'], $_GET['useremail']);
+			$user_data = $user_data_edit->request();
+	?>
+		<div id='user_edit' class='modal'>
+			<div class='modal-content'>
+				<h4>Editar Perfil</h4>
+	<?php require($path_EditProfile); ?>
+			</div>
+		</div>
+	<?php endif; ?>
+	
+  <?php
+  //  Editar vehiculo  ?>
+
+
+
+  <?php
+  //  Form para editar autos
+    if (isset($_GET['vehicleid']))	:
+  ?>
+    <div id='vehicle_edit' class='modal'>
+      <div class='modal-content'>
+        <h4>Editar Vehiculo</h4>
+        <form action="" method="post">
+            <?php require($path_VehiclesDataInput) ?>
+            <input type="submit">
+        </form>
+      </div>
+    </div>
+  <?php endif; ?>
+
+
+
+
+
+  <?php
+  //  Form para alquilar autos
+    if (isset($_GET['id_auto']))	:
+      $rent_vehicle_date = date('Y-m-d');
+  ?>
+    <div id='vehicle_rent' class='modal'>
+      <div class='modal-content'>
+        <h4>Alquilar Vehiculo</h4>
+          <?php if (isset($_GET['id_auto'])) : ?>
+            <form action="<?php echo $path_rentVehicle; ?>" method="get">
+            <input type="hidden" name="rent_admin" value="">
+          <?php endif; ?>
+          <?php if (isset($_GET['rent_edit'])) : ?>
+            <form action="<?php echo $path_rentEdit; ?>" method="get">
+            <input type="hidden" name="rent_edit" value="">
+          <?php endif; ?>
+          
+            <input type="hidden" name="vehicle_id" value="<?php echo $_GET['id_auto'] ?>">
+            <input type="hidden" name="user_id" value="<?php echo $user_data['id']; ?>">
+          <?php require($path_rentDataInput); ?>
+            <input type="submit">
+        </form>
+      </div>
+    </div>
+  <?php endif; ?>
 
 </body>

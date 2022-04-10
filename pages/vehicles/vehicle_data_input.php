@@ -3,45 +3,49 @@
     <div class="row">
         <div class="input-field col s6">
             <label for="brand">Marca</label>
-            <input type="text" name="brand">
+            <input required required type="text" name="brand">
         </div>
         <div class="input-field col s6">
             <label for="model">Modelo</label>
-            <input type="text" name="model" id="model">
+            <input required type="text" name="model" id="model">
         </div>
         <div class="input-field col s6">
             <label for="vehicletype">Tipo de vehiculo</label>
-            <input type="text" name="vehicletype" id="vehicletype">
+            <input required type="text" name="vehicletype" id="vehicletype">
         </div>
         <div class="input-field col s6">
             <label for="year">Año</label>
-            <input placeholder="." type="date" name="year" id="year">
+            <input required placeholder="." type="number" name="year" id="year" max="9999" min="1769">
         </div>
         <div class="input-field col s6">
             <label for="color">Color</label>
-            <input type="text" name="color" id="color">
+            <input required type="text" name="color" id="color">
         </div>
         <div class="input-field col s6">
             <label for="url">Foto del auto</label>
-            <input type="text" name="url" id="url">
+            <input required type="text" name="url" id="url">
         </div>
         <div class="input-field col s6">
             <label for="price">Precio</label>
-            <input type="number" name="price" id="price">
+            <input required type="number" name="price" id="price">
+        </div>
+        <div class="input-field col s6">
+            <label for="plate">Matricula</label>
+            <input required type="text" name="plate" id="plate">
+        </div>
+        <div class="input-field col s6">
+            <label for="passenger">Pasajeros</label>
+            <input required type="number" name="passenger" id="passenger" min="1" max="99">
         </div>
         <?php // Si sos admin ?>
+    <?php if ($user_data['role'] == 'Vendedor') : ?>
+            
+            <input required type="hidden" name="vendedor_id" value="<?php echo $user_data['id'];?>" readonly>
+    <?php endif; ?>
     <?php if ($user_data['role'] == 'Admin' OR $user_data['role'] == 'Encargado') : ?>
         <div class="input-field col s6">
             <label for="vendedor_id">Id Vendedor</label>
-            <input type="number" name="vendedor_id" id="vendedor_id">
-        </div>
-        <div class="input-field col s6">
-            <label for="date_start">Fecha de inicio</label>
-            <input type="text" name="model" id="model">
-        </div>
-        <div class="input-field col s6">
-            <label for="date_end">Fecha de fin</label>
-            <input type="text" name="model" id="model">
+            <input required type="number" name="vendedor_id" id="vendedor_id">
         </div>
     <?php endif; ?>
     </div>

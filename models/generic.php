@@ -1,11 +1,14 @@
 <?php
+    
     class generic {
         public $connection;
-        private $user = 'root';
-        private $pass = '';
+        public $user = DBUSER;
+        public $pass = DBPASS;
+        public $host = DBHOST;
+        public $dbname = DBNAME;
 
         private function constructor() {
-            $this->connection = new PDO("mysql:host=localhost;dbname=alquileres_vehiculos",$this->user,$this->pass);
+            $this->connection = new PDO("mysql:host=$this->host;dbname=$this->dbname",$this->user,$this->pass);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
 

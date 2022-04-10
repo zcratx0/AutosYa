@@ -2,6 +2,6 @@
 
     @session_start();
     @session_destroy();
-    header("Location: /V2/index.php");
+    header("Location: ../../index.php");
     die();
 ?>

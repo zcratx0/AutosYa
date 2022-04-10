@@ -56,7 +56,7 @@
                 <input type="text" name="document" id="document" value=" <?php echo $user_data['document']?>">
             </div>
         </div>
-            <?php if (isset($admin) && $admin == true) : // Only for admins ?>
+            <?php if (isset($admin) && $admin == true) : // Solo para admins ?>
                 <div class="row">
                     <div class="col s6">
                         <label for="state">Estado</label>
