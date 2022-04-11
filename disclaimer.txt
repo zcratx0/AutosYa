@@ -1,0 +1,24 @@
+El proyecto cuenta con muchos errores, bugs, funciones sin completar y consignas que no pude cumplir por falta de tiempo, el motivo de que lo envio como esta es primero para demostrar que lo estuve realizando y el segundo para tener una nocion de errores que pude tener y mejorarlo para la proxima oportunidad. 
+
+
+
+Lista de funciones implementadas:
+-   Crear usuario.
+-   Borrar usuarios.
+-   Salir de la secion.
+-   Crear alquileres.
+-   Borrar alquileres.
+-   Modificar fecha de alquileres.
+-   Crear Vehiculo.
+-   Borrar Vehiculo.
+
+Lista de funciones no implementadas planeadas.
+Carga de imagenes:  Actualmente el backend solo busca las imagenes por url, no las sube al sistema.
+Modificar usuarios: Desde modificar sus datos hasta modificar sus roles y estado solo si se es admin no han sido agregadas. Dichas funciones fueron realizadas a travez de DBeaver.
+Modificar Vehiculos: Los datos del Vehiculos al igual que usuarios no pueden ser modificados.
+Estados: El sistema no revisa si tu estado es Activado, Desactivado o Borrado, sin embargo dichos estados existen en la base de datos.
+Busqueda de Usuarios: No funciona.
+Busqueda de Alquileres: No funciona.
+Editar perfil: No actualiza los valores.
+Reservar: No checkea si el Vehiculo ya esta reservado.
+Las url no estan protegidas.
